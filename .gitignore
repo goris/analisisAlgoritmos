@@ -1,0 +1,12 @@
+# Build artifacts
+/bin/
+*.exe
+*.test
+*.out
+
+# Go workspace files (not used in this repo, but ignored just in case)
+go.work
+go.work.sum
+
+# OS
+.DS_Store

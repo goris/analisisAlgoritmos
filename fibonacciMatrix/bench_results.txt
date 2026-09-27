@@ -1,0 +1,51 @@
+goos: darwin
+goarch: arm64
+pkg: analisisAlgoritmos/fibonacciMatrix
+cpu: Apple M2 Pro
+BenchmarkFibonacci/n=10-12       	23105958	        51.39 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=10-12       	23971273	        50.79 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=10-12       	23975305	        51.70 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=20-12       	10718715	       112.4 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=20-12       	10696489	       111.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=20-12       	10827873	       109.9 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=30-12       	 7068604	       172.8 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=30-12       	 6983605	       171.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=30-12       	 7160528	       172.5 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=40-12       	 4994796	       232.8 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=40-12       	 5165178	       235.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=40-12       	 5135299	       230.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=80-12       	 2614280	       460.9 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=80-12       	 2615678	       459.4 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacci/n=80-12       	 2595498	       465.6 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=10-12 	15108529	        79.86 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=10-12 	15114808	        79.21 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=10-12 	15184594	        79.17 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=20-12 	 7629090	       158.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=20-12 	 7584634	       157.5 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=20-12 	 7544751	       158.8 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=30-12 	 5105295	       235.4 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=30-12 	 4881813	       235.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=30-12 	 5027299	       235.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=40-12 	 3787035	       313.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=40-12 	 3785188	       320.5 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=40-12 	 3802233	       315.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=80-12 	 1886798	       622.6 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=80-12 	 1913175	       643.8 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciMatrix/n=80-12 	 1902387	       628.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=10-12         	15845959	        75.75 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=10-12         	15907760	        77.61 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=10-12         	15724677	        76.49 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=20-12         	12367281	        96.73 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=20-12         	12459727	        96.95 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=20-12         	12258709	        97.43 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=30-12         	11350624	       106.5 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=30-12         	11423230	       110.3 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=30-12         	10747411	       107.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=40-12         	 9822116	       120.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=40-12         	 9671773	       121.1 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=40-12         	 9977259	       121.6 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=80-12         	 8426923	       143.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=80-12         	 8104107	       149.2 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFibonacciCombined/n=80-12         	 8425077	       142.3 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	analisisAlgoritmos/fibonacciMatrix	64.373s
