@@ -10,3 +10,8 @@ go.work.sum
 
 # OS
 .DS_Store
+
+# Python / Jupyter
+.venv/
+__pycache__/
+.ipynb_checkpoints/

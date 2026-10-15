@@ -26,7 +26,11 @@ analisisAlgoritmos/
     ├── quickSort_test.go
     ├── quickSort_bench_test.go
     ├── generator.go
-    └── generator_test.go
+    ├── generator_test.go
+    ├── timing_test.go
+    ├── quickSort.ipynb        # graphs the results (Python)
+    ├── requirements.txt       # Python dependencies for the notebook
+    └── output/                # written by the Go program and the notebook
 ```
 
 ## Notes
@@ -37,6 +41,22 @@ analisisAlgoritmos/
   O(n log n) on every input, including already sorted or reversed ones.
   Known limitation of Lomuto: an array where every element is equal still
   takes O(n²), because all elements fall on the same side of the pivot.
+
+## Graphing the quickSort results
+
+The Go program writes every measured sort time to `output/times.csv`, relative
+to the folder it runs from. The notebook reads `quickSort/output/times.csv`, so
+run the program from inside `quickSort/`:
+
+```bash
+cd quickSort
+go run .                                   # writes output/times.csv and output/summary.txt
+uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt   # first time only
+.venv/bin/jupyter lab quickSort.ipynb     # or open it in VS Code with the .venv kernel
+```
+
+The notebook saves its graphs to `output/time_vs_n.png` (measured times) and
+`output/time_vs_n_fits.png` (measured times with fitted k₁·n·log₂n and k₂·n² curves).
 
 ## Adding a new exercise
 
