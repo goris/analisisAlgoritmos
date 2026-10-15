@@ -17,11 +17,26 @@ analisisAlgoritmos/
 ├── expoBySqr/
 │   ├── expoBySqr.go
 │   └── expoBySqr_test.go
-└── fibonacciMatrix/
-    ├── fibonnaci.go
-    ├── fibonacci_test.go
-    └── fibonacci_bench_test.go
+├── fibonacciMatrix/
+│   ├── fibonnaci.go
+│   ├── fibonacci_test.go
+│   └── fibonacci_bench_test.go
+└── quickSort/
+    ├── quickSort.go
+    ├── quickSort_test.go
+    ├── quickSort_bench_test.go
+    ├── generator.go
+    └── generator_test.go
 ```
+
+## Notes
+
+- `quickSort` picks its pivot uniformly at random with `math/rand/v2`
+  (`rand.IntN`) and partitions with the Lomuto scheme (CLRS
+  `RANDOMIZED-PARTITION`). The random pivot makes the expected running time
+  O(n log n) on every input, including already sorted or reversed ones.
+  Known limitation of Lomuto: an array where every element is equal still
+  takes O(n²), because all elements fall on the same side of the pivot.
 
 ## Adding a new exercise
 
