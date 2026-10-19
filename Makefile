@@ -1,7 +1,7 @@
 BIN_DIR := bin
 EXERCISES := $(notdir $(shell find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' ! -name '$(BIN_DIR)' ! -name '.*'))
 
-.PHONY: build test bench run clean list help
+.PHONY: build test bench run clean list help notebook-env
 
 help:
 	@echo "make build        build every exercise into $(BIN_DIR)/"
@@ -10,6 +10,7 @@ help:
 	@echo "make run EX=name  run a single exercise, e.g. make run EX=expoBySqr"
 	@echo "make list         list available exercises"
 	@echo "make clean        remove $(BIN_DIR)/"
+	@echo "make notebook-env set up the Python environment for the notebooks (.venv/)"
 
 build:
 	@mkdir -p $(BIN_DIR)
@@ -36,3 +37,6 @@ list:
 
 clean:
 	rm -rf $(BIN_DIR)
+
+notebook-env:
+	uv sync

@@ -1,5 +1,0 @@
-jupyterlab
-ipykernel
-nbconvert
-pandas
-matplotlib

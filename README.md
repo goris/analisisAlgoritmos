@@ -9,11 +9,15 @@ Exercises and assignments for an algorithms analysis class, mostly written in Go
   `_test.go` (and optionally `_bench_test.go`).
 - No nested `go.mod` files — every exercise shares the root module, so it can
   be built, run, and tested either on its own or together with the rest.
+- One Python environment for the whole repo (`pyproject.toml` + `uv.lock` at the
+  root), shared by every exercise's Jupyter notebook.
 
 ```
 analisisAlgoritmos/
 ├── go.mod
 ├── Makefile
+├── pyproject.toml             # Python dependencies for the notebooks
+├── uv.lock                    # exact versions, managed by uv
 ├── expoBySqr/
 │   ├── expoBySqr.go
 │   └── expoBySqr_test.go
@@ -29,7 +33,6 @@ analisisAlgoritmos/
     ├── generator_test.go
     ├── timing_test.go
     ├── quickSort.ipynb        # graphs the results (Python)
-    ├── requirements.txt       # Python dependencies for the notebook
     └── output/                # written by the Go program and the notebook
 ```
 
@@ -42,6 +45,22 @@ analisisAlgoritmos/
   Known limitation of Lomuto: an array where every element is equal still
   takes O(n²), because all elements fall on the same side of the pivot.
 
+## Notebooks
+
+The Python environment lives at the repo root and is managed with
+[uv](https://docs.astral.sh/uv/). Set it up once (and again whenever
+`pyproject.toml` or `uv.lock` changes):
+
+```bash
+make notebook-env      # same as: uv sync — creates .venv/ with the exact locked versions
+```
+
+Then open a notebook in VS Code and pick the `.venv` kernel, or run
+`uv run jupyter lab` from the root. Jupyter runs each notebook from its own
+folder, so relative paths like `output/times.csv` point inside that exercise.
+
+To add a Python package: `uv add <package>` (updates `pyproject.toml` and `uv.lock`).
+
 ## Graphing the quickSort results
 
 The Go program writes every measured sort time to `output/times.csv`, relative
@@ -50,10 +69,10 @@ run the program from inside `quickSort/`:
 
 ```bash
 cd quickSort
-go run .                                   # writes output/times.csv and output/summary.txt
-uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt   # first time only
-.venv/bin/jupyter lab quickSort.ipynb     # or open it in VS Code with the .venv kernel
+go run .               # writes output/times.csv and output/summary.txt
 ```
+
+Then open `quickSort/quickSort.ipynb` as described in [Notebooks](#notebooks).
 
 The notebook saves its graphs to `output/time_vs_n.png` (measured times) and
 `output/time_vs_n_fits.png` (measured times with fitted k₁·n·log₂n and k₂·n² curves).
@@ -74,6 +93,7 @@ make test             # run every exercise's tests
 make bench            # run every exercise's benchmarks
 make build            # build every exercise into bin/<exercise>
 make clean            # remove bin/
+make notebook-env     # set up the Python environment for the notebooks
 ```
 
 Equivalent raw `go` commands, scoped to a single exercise:
