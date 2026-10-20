@@ -110,6 +110,26 @@ func TestParseGraphErrors(t *testing.T) {
 			name: "negative weight",
 			text: "Nodes: 0, 1\nEdges:\n[(0, 1, {'weight': -3})]",
 		},
+		{
+			name: "negative vertex label",
+			text: "Nodes: -1, 0\nEdges:\n[]",
+		},
+		{
+			name: "negative endpoint",
+			text: "Nodes: 0, 1\nEdges:\n[(0, -1)]",
+		},
+		{
+			name: "non integer weight",
+			text: "Nodes: 0, 1\nEdges:\n[(0, 1, {'weight': 2.5})]",
+		},
+		{
+			name: "weight without key",
+			text: "Nodes: 0, 1\nEdges:\n[(0, 1, 7)]",
+		},
+		{
+			name: "truncated edge",
+			text: "Nodes: 0, 1\nEdges:\n[(0, 1]",
+		},
 	}
 
 	for _, tt := range tests {

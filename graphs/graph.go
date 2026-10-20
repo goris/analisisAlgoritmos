@@ -19,10 +19,13 @@ type graph struct {
 }
 
 var (
-	vertexPattern = regexp.MustCompile(`\d+`)
+	vertexPattern = regexp.MustCompile(`-?\d+`)
+	tuplePattern  = regexp.MustCompile(`\([^()]*\)`)
 	edgePattern   = regexp.MustCompile(
-		`\(\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*\{\s*'weight'\s*:\s*(-?\d+)\s*\})?\s*\)`,
+		`^\(\s*(-?\d+)\s*,\s*(-?\d+)\s*(?:,\s*\{\s*'weight'\s*:\s*(-?\d+)\s*\})?\s*\)$`,
 	)
+	// Between the edge tuples only the list brackets, commas and whitespace are allowed.
+	separatorPattern = regexp.MustCompile(`^[\s\[\],]*$`)
 )
 
 func parseGraph(text string, directed bool) (*graph, error) {
@@ -61,7 +64,16 @@ func parseGraph(text string, directed bool) (*graph, error) {
 	n := len(labels)
 	g := &graph{adj: make([][]edge, n)}
 
-	for _, match := range edgePattern.FindAllStringSubmatch(edgesText, -1) {
+	if !separatorPattern.MatchString(tuplePattern.ReplaceAllString(edgesText, "")) {
+		return nil, errors.New("Edges section has text that is not an edge tuple")
+	}
+
+	for _, tuple := range tuplePattern.FindAllString(edgesText, -1) {
+		match := edgePattern.FindStringSubmatch(tuple)
+		if match == nil {
+			return nil, fmt.Errorf("malformed edge %q", tuple)
+		}
+
 		u, err := strconv.Atoi(match[1])
 		if err != nil {
 			return nil, err
@@ -79,7 +91,7 @@ func parseGraph(text string, directed bool) (*graph, error) {
 			}
 		}
 
-		if u >= n || v >= n {
+		if u < 0 || v < 0 || u >= n || v >= n {
 			return nil, fmt.Errorf("edge (%d, %d) has an endpoint outside 0..%d", u, v, n-1)
 		}
 		if weight < 0 {
