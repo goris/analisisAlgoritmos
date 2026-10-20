@@ -38,6 +38,13 @@ func TestConnectedComponents(t *testing.T) {
 			text:     "Nodes: 0, 1, 2, 3\nEdges:\n[(0, 1), (0, 2), (1, 3)]",
 			expected: [][]int{{0, 1, 3, 2}},
 		},
+		{
+			// An iterative stack that marks vertices when they are pushed gives
+			// 0 1 3 4 2 here, and breadth-first search gives 0 1 2 3 4.
+			name:     "depth first order with shared neighbour",
+			text:     "Nodes: 0, 1, 2, 3, 4\nEdges:\n[(0, 1), (0, 2), (1, 3), (2, 3), (3, 4)]",
+			expected: [][]int{{0, 1, 3, 2, 4}},
+		},
 	}
 
 	for _, tt := range tests {
