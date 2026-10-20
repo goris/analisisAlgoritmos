@@ -1,5 +1,5 @@
 BIN_DIR := bin
-EXERCISES := $(notdir $(shell find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' ! -name '$(BIN_DIR)' ! -name '.*'))
+EXERCISES := $(notdir $(shell find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' ! -name '$(BIN_DIR)' ! -name 'docs' ! -name '.*'))
 
 .PHONY: build test bench run clean list help notebook-env
 

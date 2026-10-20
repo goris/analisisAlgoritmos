@@ -25,6 +25,17 @@ analisisAlgoritmos/
 │   ├── fibonnaci.go
 │   ├── fibonacci_test.go
 │   └── fibonacci_bench_test.go
+├── graphs/
+│   ├── data/                  # input graphs, embedded with go:embed
+│   │   ├── Grafo_no_conexo.txt
+│   │   └── Grafo_ponderado.txt
+│   ├── graph.go               # adjacency list + parser for both file formats
+│   ├── graph_test.go
+│   ├── dfs.go                 # connected components with DFS
+│   ├── dfs_test.go
+│   ├── dijkstra.go            # Dijkstra with a container/heap priority queue
+│   ├── dijkstra_test.go
+│   └── main.go
 └── quickSort/
     ├── quickSort.go
     ├── quickSort_test.go
@@ -44,6 +55,17 @@ analisisAlgoritmos/
   O(n log n) on every input, including already sorted or reversed ones.
   Known limitation of Lomuto: an array where every element is equal still
   takes O(n²), because all elements fall on the same side of the pivot.
+- `graphs` finds the connected components of `Grafo_no_conexo.txt` with a
+  recursive DFS (CLRS `DFS` / `DFS-VISIT`), and the minimum route from 0 to 14
+  in `Grafo_ponderado.txt` with Dijkstra. Run it with `make run EX=graphs`.
+  - The weighted file is read as a digraph (each edge `u → v` as listed),
+    because the assignment calls it a *dígrafo*, even though its picture has
+    no arrows. Reading it undirected gives the same cost.
+  - Both input files are embedded with `go:embed`, so `go run ./graphs` works
+    from any directory.
+  - Dijkstra only replaces a distance with a strictly smaller one. Two routes
+    cost 13, `0 → 5 → 14` and `0 → 5 → 8 → 14`; the first one is found first
+    and is the one reported.
 
 ## Notebooks
 
