@@ -98,6 +98,8 @@ func parseGraph(text string, directed bool) (*Graph, error) {
 			return nil, fmt.Errorf("edge (%d, %d) has negative weight %d", u, v, weight)
 		}
 
+		// Store the edge u→v in u's adjacency list. An undirected edge can be
+		// walked both ways, so it is also stored as v→u in v's list.
 		g.Adj[u] = append(g.Adj[u], Edge{To: v, Weight: weight})
 		if !directed {
 			g.Adj[v] = append(g.Adj[v], Edge{To: u, Weight: weight})
