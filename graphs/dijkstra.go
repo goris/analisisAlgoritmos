@@ -6,22 +6,22 @@ import (
 	"slices"
 )
 
-type pqItem struct {
-	vertex int
-	dist   int
+type PQItem struct {
+	Vertex int
+	Dist   int
 }
 
-type priorityQueue []pqItem
+type PriorityQueue []PQItem
 
-func (pq priorityQueue) Len() int           { return len(pq) }
-func (pq priorityQueue) Less(i, j int) bool { return pq[i].dist < pq[j].dist }
-func (pq priorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
+func (pq PriorityQueue) Len() int           { return len(pq) }
+func (pq PriorityQueue) Less(i, j int) bool { return pq[i].Dist < pq[j].Dist }
+func (pq PriorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
 
-func (pq *priorityQueue) Push(x any) {
-	*pq = append(*pq, x.(pqItem))
+func (pq *PriorityQueue) Push(x any) {
+	*pq = append(*pq, x.(PQItem))
 }
 
-func (pq *priorityQueue) Pop() any {
+func (pq *PriorityQueue) Pop() any {
 	old := *pq
 	n := len(old)
 	item := old[n-1]
@@ -29,8 +29,8 @@ func (pq *priorityQueue) Pop() any {
 	return item
 }
 
-func dijkstra(g *graph, source int) (dist []int, prev []int) {
-	n := len(g.adj)
+func dijkstra(g *Graph, source int) (dist []int, prev []int) {
+	n := len(g.Adj)
 	dist = make([]int, n)
 	prev = make([]int, n)
 	visited := make([]bool, n)
@@ -40,11 +40,11 @@ func dijkstra(g *graph, source int) (dist []int, prev []int) {
 	}
 
 	dist[source] = 0
-	pq := &priorityQueue{}
-	heap.Push(pq, pqItem{vertex: source, dist: 0})
+	pq := &PriorityQueue{}
+	heap.Push(pq, PQItem{Vertex: source, Dist: 0})
 
 	for pq.Len() > 0 {
-		u := heap.Pop(pq).(pqItem).vertex
+		u := heap.Pop(pq).(PQItem).Vertex
 
 		// A vertex can be in the queue more than once; only its first pop,
 		// with the smallest distance, counts.
@@ -53,11 +53,11 @@ func dijkstra(g *graph, source int) (dist []int, prev []int) {
 		}
 		visited[u] = true
 
-		for _, e := range g.adj[u] {
-			if !visited[e.to] && dist[u]+e.weight < dist[e.to] {
-				dist[e.to] = dist[u] + e.weight
-				prev[e.to] = u
-				heap.Push(pq, pqItem{vertex: e.to, dist: dist[e.to]})
+		for _, e := range g.Adj[u] {
+			if !visited[e.To] && dist[u]+e.Weight < dist[e.To] {
+				dist[e.To] = dist[u] + e.Weight
+				prev[e.To] = u
+				heap.Push(pq, PQItem{Vertex: e.To, Dist: dist[e.To]})
 			}
 		}
 	}

@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-type edge struct {
-	to     int
-	weight int
+type Edge struct {
+	To     int
+	Weight int
 }
 
-type graph struct {
-	adj [][]edge
+type Graph struct {
+	Adj [][]Edge
 }
 
 var (
@@ -28,7 +28,7 @@ var (
 	separatorPattern = regexp.MustCompile(`^[\s\[\],]*$`)
 )
 
-func parseGraph(text string, directed bool) (*graph, error) {
+func parseGraph(text string, directed bool) (*Graph, error) {
 	nodesStart := strings.Index(text, "Nodes:")
 	if nodesStart == -1 {
 		return nil, errors.New("missing Nodes section")
@@ -53,7 +53,7 @@ func parseGraph(text string, directed bool) (*graph, error) {
 		labels = append(labels, label)
 	}
 
-	// The vertices must be exactly 0..n-1, in any order, so they can index adj.
+	// The vertices must be exactly 0..n-1, in any order, so they can index Adj.
 	slices.Sort(labels)
 	for i, label := range labels {
 		if label != i {
@@ -62,7 +62,7 @@ func parseGraph(text string, directed bool) (*graph, error) {
 	}
 
 	n := len(labels)
-	g := &graph{adj: make([][]edge, n)}
+	g := &Graph{Adj: make([][]Edge, n)}
 
 	if !separatorPattern.MatchString(tuplePattern.ReplaceAllString(edgesText, "")) {
 		return nil, errors.New("Edges section has text that is not an edge tuple")
@@ -98,16 +98,16 @@ func parseGraph(text string, directed bool) (*graph, error) {
 			return nil, fmt.Errorf("edge (%d, %d) has negative weight %d", u, v, weight)
 		}
 
-		g.adj[u] = append(g.adj[u], edge{to: v, weight: weight})
+		g.Adj[u] = append(g.Adj[u], Edge{To: v, Weight: weight})
 		if !directed {
-			g.adj[v] = append(g.adj[v], edge{to: u, weight: weight})
+			g.Adj[v] = append(g.Adj[v], Edge{To: u, Weight: weight})
 		}
 	}
 
 	return g, nil
 }
 
-func loadGraph(name string, directed bool) (*graph, error) {
+func loadGraph(name string, directed bool) (*Graph, error) {
 	data, err := dataFS.ReadFile("data/" + name)
 	if err != nil {
 		return nil, err

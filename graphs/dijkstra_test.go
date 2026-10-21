@@ -88,7 +88,7 @@ func TestDijkstra(t *testing.T) {
 			if dist[tt.target] != tt.expectedDist {
 				t.Errorf(
 					"dijkstra(%v, %d) dist[%d] = %d; expected: %d",
-					g.adj,
+					g.Adj,
 					tt.source,
 					tt.target,
 					dist[tt.target],

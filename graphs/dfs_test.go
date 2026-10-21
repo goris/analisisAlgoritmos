@@ -59,7 +59,7 @@ func TestConnectedComponents(t *testing.T) {
 			if !slices.EqualFunc(result, tt.expected, slices.Equal[[]int]) {
 				t.Errorf(
 					"connectedComponents(%v) = %v; expected: %v",
-					g.adj,
+					g.Adj,
 					result,
 					tt.expected,
 				)

@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func edgeCount(g *graph) int {
+func edgeCount(g *Graph) int {
 	count := 0
-	for _, edges := range g.adj {
+	for _, edges := range g.Adj {
 		count += len(edges)
 	}
 	return count
@@ -21,43 +21,43 @@ func TestParseGraph(t *testing.T) {
 		name        string
 		text        string
 		directed    bool
-		expectedAdj [][]edge
+		expectedAdj [][]Edge
 	}{
 		{
 			name:        "weighted single line",
 			text:        "Nodes: 0, 1, 2\n\nEdges:\n[(0, 1, {'weight': 4}), (1, 2, {'weight': 7})]",
 			directed:    true,
-			expectedAdj: [][]edge{{{1, 4}}, {{2, 7}}, {}},
+			expectedAdj: [][]Edge{{{1, 4}}, {{2, 7}}, {}},
 		},
 		{
 			name:        "unweighted multi line",
 			text:        unweightedMultiLine,
 			directed:    false,
-			expectedAdj: [][]edge{{{1, 1}, {2, 1}}, {{0, 1}}, {{0, 1}}},
+			expectedAdj: [][]Edge{{{1, 1}, {2, 1}}, {{0, 1}}, {{0, 1}}},
 		},
 		{
 			name:        "crlf line endings",
 			text:        strings.ReplaceAll(unweightedMultiLine, "\n", "\r\n"),
 			directed:    false,
-			expectedAdj: [][]edge{{{1, 1}, {2, 1}}, {{0, 1}}, {{0, 1}}},
+			expectedAdj: [][]Edge{{{1, 1}, {2, 1}}, {{0, 1}}, {{0, 1}}},
 		},
 		{
 			name:        "zero weight accepted",
 			text:        "Nodes: 0, 1\nEdges:\n[(0, 1, {'weight': 0})]",
 			directed:    true,
-			expectedAdj: [][]edge{{{1, 0}}, {}},
+			expectedAdj: [][]Edge{{{1, 0}}, {}},
 		},
 		{
 			name:        "nodes out of order",
 			text:        "Nodes: 2, 0, 1\nEdges:\n[(0, 2)]",
 			directed:    true,
-			expectedAdj: [][]edge{{{2, 1}}, {}, {}},
+			expectedAdj: [][]Edge{{{2, 1}}, {}, {}},
 		},
 		{
 			name:        "empty edge list",
 			text:        "Nodes: 0, 1, 2\nEdges:\n[]",
 			directed:    false,
-			expectedAdj: [][]edge{{}, {}, {}},
+			expectedAdj: [][]Edge{{}, {}, {}},
 		},
 	}
 
@@ -68,12 +68,12 @@ func TestParseGraph(t *testing.T) {
 				t.Fatalf("parseGraph(%q, %v) returned error: %v", tt.text, tt.directed, err)
 			}
 
-			if !slices.EqualFunc(g.adj, tt.expectedAdj, slices.Equal[[]edge]) {
+			if !slices.EqualFunc(g.Adj, tt.expectedAdj, slices.Equal[[]Edge]) {
 				t.Errorf(
-					"parseGraph(%q, %v).adj = %v; expected: %v",
+					"parseGraph(%q, %v).Adj = %v; expected: %v",
 					tt.text,
 					tt.directed,
-					g.adj,
+					g.Adj,
 					tt.expectedAdj,
 				)
 			}
@@ -173,12 +173,12 @@ func TestLoadGraph(t *testing.T) {
 				t.Fatalf("loadGraph(%q, %v) returned error: %v", tt.file, tt.directed, err)
 			}
 
-			if len(g.adj) != tt.expectedVertices {
+			if len(g.Adj) != tt.expectedVertices {
 				t.Errorf(
-					"len(loadGraph(%q, %v).adj) = %d; expected: %d",
+					"len(loadGraph(%q, %v).Adj) = %d; expected: %d",
 					tt.file,
 					tt.directed,
-					len(g.adj),
+					len(g.Adj),
 					tt.expectedVertices,
 				)
 			}
