@@ -36,6 +36,11 @@ analisisAlgoritmos/
 │   ├── dijkstra.go            # Dijkstra with a container/heap priority queue
 │   ├── dijkstra_test.go
 │   └── main.go
+├── huffman/
+│   ├── huffman.go             # tree node, frequencies, tree, codes
+│   ├── queue.go               # min priority queue for container/heap
+│   ├── huffman_test.go
+│   └── main.go
 └── quickSort/
     ├── quickSort.go
     ├── quickSort_test.go
