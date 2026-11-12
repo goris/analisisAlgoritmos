@@ -1,29 +1,28 @@
 package main
 
-// priorityQueue is meant to be driven by container/heap, the same way as in
-// graphs/dijkstra.go: implement these five methods, then use heap.Init,
-// heap.Push and heap.Pop instead of calling Push and Pop directly.
+// priorityQueue is meant to be driven by container/heap
 type priorityQueue []*node
 
 func (pq priorityQueue) Len() int {
-	// TODO
-	return 0
+	return len(pq)
 }
 
 func (pq priorityQueue) Less(i, j int) bool {
-	// TODO
-	return false
+	return pq[i].freq < pq[j].freq
 }
 
 func (pq priorityQueue) Swap(i, j int) {
-	// TODO
+	pq[i], pq[j] = pq[j], pq[i]
 }
 
 func (pq *priorityQueue) Push(x any) {
-	// TODO
+	*pq = append(*pq, x.(*node))
 }
 
 func (pq *priorityQueue) Pop() any {
-	// TODO
-	return nil
+	old := *pq
+	n := len(old)
+	x := old[n-1]
+	*pq = old[0 : n-1]
+	return x
 }

@@ -7,11 +7,15 @@ import (
 )
 
 func main() {
-	// TODO: pegar aquí el enunciado de la actividad.
+	/*
+		Char |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I
+		Freq |  5  |  12 |  35 |  3  |  8  |  14 |  21 |  1  |  39
+	*/
 	const text = "abracadabra"
+	example := map[rune]int{'a': 5, 'b': 12, 'c': 35, 'd': 3, 'e': 8, 'f': 14, 'g': 21, 'h': 1, 'i': 39}
 
 	freq := countFrequencies(text)
-	root := buildTree(freq)
+	root := buildTree(example)
 	codes := buildCodes(root)
 
 	fmt.Printf("Texto: %q\n", text)
