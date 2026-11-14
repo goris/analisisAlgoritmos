@@ -5,25 +5,69 @@ const (
 	boxSize = 3
 )
 
-// 0 marks an empty cell.
 type grid [size][size]int
 
 func isValid(g *grid, row, col, num int) bool {
-	// TODO: (row, col) is an empty cell. Report whether num can go there:
-	// it must not already appear in the same row, column or 3x3 box.
-	return false
+	// Validar que num no está en la fila
+	for i := range size {
+		if g[row][i] == num {
+			return false
+		}
+	}
+
+	// Validar que num no está en la columna
+	for i := range size {
+		if g[i][col] == num {
+			return false
+		}
+	}
+
+	// Validar que num no está en la cajita
+	boxRow := (row / boxSize) * boxSize
+	boxCol := (col / boxSize) * boxSize
+	for i := range boxSize {
+		for j := range boxSize {
+			if g[boxRow+i][boxCol+j] == num {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func findEmpty(g *grid) (row, col int, found bool) {
-	// TODO: scan row by row, left to right, and return the first empty cell.
-	// found is false when the grid has no empty cells.
+	for row := range size {
+		for col := range size {
+			if g[row][col] == 0 {
+				return row, col, true
+			}
+		}
+	}
 	return 0, 0, false
 }
 
 func solve(g *grid, backtracks *int) bool {
-	// TODO: fill g in place with backtracking. Take the cell findEmpty gives
-	// you, try 1..9 in that order, recurse on each valid choice, and undo the
-	// choice if the recursion fails. Add 1 to *backtracks every time you undo
-	// a value (reset a cell to 0). Return false if the puzzle has no solution.
-	return false
+	row, col, found := findEmpty(g)
+
+	// Si no hay celdas vacías, el Sudoku esta resuelto
+	if !found {
+		return true
+	}
+
+	for num := 1; num <= size; num++ {
+		if isValid(g, row, col, num) {
+			g[row][col] = num
+			if solve(g, backtracks) {
+				// Se pudo resolver el Sudoku con este número
+				return true
+			}
+
+			// El valor no es correcto, deshacer el cambio y probar el siguiente número
+			g[row][col] = 0
+
+			// Incrementar el contador de retrocesos con cada intento incorrecto
+			*backtracks++
+		}
+	}
+	return false // No se encontró un número válido para esta celda
 }
