@@ -20,9 +20,10 @@ func findEmpty(g *grid) (row, col int, found bool) {
 	return 0, 0, false
 }
 
-func solve(g *grid) bool {
-	// TODO: fill g in place with backtracking. Take an empty cell, try 1..9,
-	// recurse on each valid choice, and undo the choice if the recursion fails.
-	// Return false if the puzzle has no solution.
+func solve(g *grid, backtracks *int) bool {
+	// TODO: fill g in place with backtracking. Take the cell findEmpty gives
+	// you, try 1..9 in that order, recurse on each valid choice, and undo the
+	// choice if the recursion fails. Add 1 to *backtracks every time you undo
+	// a value (reset a cell to 0). Return false if the puzzle has no solution.
 	return false
 }

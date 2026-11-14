@@ -92,7 +92,8 @@ func TestSolve(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			g := tt.g
-			if !solve(&g) {
+			backtracks := 0
+			if !solve(&g, &backtracks) {
 				t.Fatalf("solve returned false; expected a solution for:\n%s", show(&tt.g))
 			}
 			checkSolution(t, &tt.g, &g)
@@ -103,22 +104,57 @@ func TestSolve(t *testing.T) {
 // Step 3, the backtracking part: when there is no solution, every value
 // that was tried must be undone.
 func TestSolveNoSolution(t *testing.T) {
-	// Row 0 is missing 8 and 9, but column 8 already has both, so
-	// (0, 8) can never be filled. The solver has to try 8 and 9 at
-	// (0, 0), fail both times, and give up.
-	g := grid{
-		{0, 1, 2, 3, 4, 5, 6, 7, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 9},
-		{0, 0, 0, 0, 0, 0, 0, 0, 8},
-	}
-	original := g
+	g := noSolution
+	backtracks := 0
 
-	if solve(&g) {
+	if solve(&g, &backtracks) {
 		t.Fatalf("solve returned true; expected false. Result:\n%s", show(&g))
 	}
-	if g != original {
+	if g != noSolution {
 		t.Errorf("after a failed solve the grid changed; values were not undone:\n%s", show(&g))
 	}
+}
+
+// Step 4. A backtrack is one value undone: a cell solve had filled and
+// resets to 0. The counts below assume findEmpty's row-by-row order and
+// that solve tries 1..9 in increasing order.
+func TestBacktracks(t *testing.T) {
+	someHoles := solvedGrid()
+	someHoles[0][0], someHoles[4][4], someHoles[8][8] = 0, 0, 0
+
+	tests := []struct {
+		name     string
+		g        grid
+		expected int
+	}{
+		{name: "already solved", g: solvedGrid(), expected: 0},
+		{name: "three empty cells", g: someHoles, expected: 0},
+		{name: "no solution", g: noSolution, expected: 2},
+		{name: "empty grid", g: grid{}, expected: 310},
+		{name: "puzzle1", g: puzzle1, expected: 85},
+		{name: "puzzle2", g: puzzle2, expected: 1852},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			g := tt.g
+			backtracks := 0
+			solve(&g, &backtracks)
+
+			if backtracks != tt.expected {
+				t.Errorf("backtracks = %d; expected: %d", backtracks, tt.expected)
+			}
+		})
+	}
+}
+
+// Row 0 is missing 8 and 9, but column 8 already has both, so (0, 8) can
+// never be filled. The solver tries 8 and 9 at (0, 0), undoes both, and
+// gives up.
+var noSolution = grid{
+	{0, 1, 2, 3, 4, 5, 6, 7, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 9},
+	{0, 0, 0, 0, 0, 0, 0, 0, 8},
 }
 
 // checkSolution does not use isValid, so a bug there cannot hide here.

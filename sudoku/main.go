@@ -19,13 +19,14 @@ func main() {
 		fmt.Println("Inicial:")
 		printGrid(&p.g)
 
-		if solve(&p.g) {
+		backtracks := 0
+		if solve(&p.g, &backtracks) {
 			fmt.Println("Solución:")
 			printGrid(&p.g)
 		} else {
 			fmt.Println("No tiene solución.")
 		}
-		fmt.Println()
+		fmt.Printf("Retrocesos: %d\n\n", backtracks)
 	}
 }
 
