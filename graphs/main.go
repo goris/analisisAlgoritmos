@@ -23,8 +23,6 @@ func joinInts(values []int, sep string) string {
 func main() {
 	const nonConnectedFile = "Grafo_no_conexo.txt"
 	const weightedFile = "Grafo_ponderado.txt"
-	const source = 0
-	const target = 14
 	const errorPrefix = "error:"
 
 	// 1. Codifica el algoritmo de búsqueda a profundidad. En el archivo
@@ -56,6 +54,8 @@ func main() {
 	// 2. Codifica el algoritmo de Dijkstra. En el archivo "Grafo_ponderado.txt",
 	// encontraras la descripción de un dígrafo. Usa el algoritmo que codificaste,
 	// para encontrar la ruta mínima del nodo 0 al nodo 14.
+	const source = 0
+	const target = 14
 	weighted, err := loadGraph(weightedFile, true)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, errorPrefix, err)
