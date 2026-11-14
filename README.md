@@ -41,15 +41,20 @@ analisisAlgoritmos/
 │   ├── queue.go               # min priority queue for container/heap
 │   ├── huffman_test.go
 │   └── main.go
-└── quickSort/
-    ├── quickSort.go
-    ├── quickSort_test.go
-    ├── quickSort_bench_test.go
-    ├── generator.go
-    ├── generator_test.go
-    ├── timing_test.go
-    ├── quickSort.ipynb        # graphs the results (Python)
-    └── output/                # written by the Go program and the notebook
+├── quickSort/
+│   ├── quickSort.go
+│   ├── quickSort_test.go
+│   ├── quickSort_bench_test.go
+│   ├── generator.go
+│   ├── generator_test.go
+│   ├── timing_test.go
+│   ├── quickSort.ipynb        # graphs the results (Python)
+│   └── output/                # written by the Go program and the notebook
+└── sudoku/
+    ├── sudoku.go              # grid, isValid, findEmpty, backtracking solve
+    ├── puzzles.go             # the two puzzles from the assignment
+    ├── sudoku_test.go
+    └── main.go
 ```
 
 ## Notes
